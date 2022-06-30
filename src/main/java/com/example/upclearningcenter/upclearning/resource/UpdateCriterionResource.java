@@ -1,21 +1,21 @@
 package com.example.upclearningcenter.upclearning.resource;
 
-import lombok.*;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-@With
-@NoArgsConstructor
-@AllArgsConstructor
-public class CriterionResource {
+public class UpdateCriterionResource {
 
-    private Long id;
+    @NotNull
     @NotBlank
-    @NonNull
     @Size(max = 100)
     private String name;
-    private SkillResource skillResource;
+
+    private Long skillId;
 }
