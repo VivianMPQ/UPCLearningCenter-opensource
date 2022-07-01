@@ -60,12 +60,27 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student update(Long studentId, Student request) {
-        return null;
+        Set<ConstraintViolation<Student>> violations=validator.validate(request);
+        if(!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+        Student studentWithName=studentRepository.findByName(request.getName());
+        if (studentWithName!=null&& !studentWithName.getId().equals(studentId))
+            throw new ResourceValidationException(ENTITY,
+                    "An student with the same name already exits");
+
+        return studentRepository.findById(studentId).map(request1->
+                studentRepository.save(request1.withName(request1.getName())
+                        .withAge(request1.getAge())
+                        .withAddress(request1.getAddress())))
+                        .orElseThrow(()->new ResourceNotFoundException(ENTITY, studentId));
     }
 
     @Override
     public ResponseEntity<?> delete(Long studentId) {
-        return null;
+        return studentRepository.findById(studentId).map(student -> {
+            studentRepository.delete(student);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(()->new ResourceNotFoundException(ENTITY, studentId));
     }
 
 
