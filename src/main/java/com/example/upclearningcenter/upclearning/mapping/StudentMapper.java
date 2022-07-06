@@ -17,7 +17,6 @@ public class StudentMapper implements Serializable {
     //autowired -> permite inyectar dependencias automaticamente -> construye relaciones entre los elementos
     @Autowired
     EnhancedModelMapper mapper;
-    //object mapping
     public StudentResource toResource(Student model){
         return mapper.map(model, StudentResource.class);
     }

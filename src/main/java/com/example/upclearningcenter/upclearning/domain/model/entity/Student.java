@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 @With
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "student") //la tabla se llamara students
 public class Student extends AuditModel {
@@ -24,6 +23,7 @@ public class Student extends AuditModel {
     @NotBlank
     @NotNull
     @Size(max=100)
+    @Column(unique = true)
     private String name;
 
 
